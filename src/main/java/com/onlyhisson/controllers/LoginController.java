@@ -77,15 +77,6 @@ public class LoginController {
 		return "index";
 	}
 
-	/* 회원 가입 */
-	@RequestMapping(value = "/join.do", method = RequestMethod.GET)
-	public String join() throws Exception {
-
-		logger.info("join");
-
-		return "join";
-	}
-
 	/* 회원 가입 데이터 입력 */
 	@RequestMapping(value = "permitJoin.do", method = RequestMethod.POST)
 	public String permitJoin(@RequestParam HashMap<String, Object> params, Model model) {
