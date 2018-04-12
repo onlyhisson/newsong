@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.onlyhisson.mappers.religionChMapper">
+
+	<!-- 	
+		id 태그는 DAO에서 사용하기 위한 값
+		resultType 태그는 쿼리 실행 후 데이터 값을 담을 타입
+		mybatis-config.xml 에 typeAlias를 등록해야 한다. 
+		등록하지 않으면 resultType="com.onlyhisson.DTO.MemberVO"
+	-->
+	 <select id="selectAllReCh" resultType="ReligionChVO">
+		SELECT	email, 
+				date, 
+				wed_ser, 
+				wed_pray, 
+				sat_ser,
+				sun_ser, 
+				sun_n_ser, 
+				sun_pray, 
+				bible, 
+				early_p, 
+				sat_meet, 
+				sun_meet, 
+				note
+		FROM religion_ch	
+ 	</select>
+ 	
+ 	<!-- 회원 경건생활 리스트 조회 -->
+ 	<select id="selectOneReCh1" resultType="ReligionChVO">
+ 		SELECT	email, 
+				date, 
+				wed_ser, 
+				wed_pray, 
+				sat_ser,
+				sun_ser, 
+				sun_n_ser, 
+				sun_pray, 
+				bible, 
+				early_p, 
+				sat_meet, 
+				sun_meet, 
+				note
+		FROM religion_ch	
+		WHERE email = #{email}
+ 	</select>
+ 	
+ 	<!-- 회원가입 데이터 입력 -->
+ 	<insert id="insertReligionCh" parameterType="java.util.HashMap">
+ 		INSERT INTO 	religion_ch(		email, 
+		 							date, 
+		 							wed_ser, 
+		 							wed_pray, 
+		 							sat_ser,
+		 							sun_ser, 
+		 							sun_n_ser, 
+		 							sun_pray, 
+		 							bible, 
+		 							early_p, 
+		 							sat_meet, 
+		 							sun_meet, 
+		 							note) 
+		VALUES(	#{email}, 
+				#{date},
+				#{wed_ser},
+				#{wed_pray},
+				#{sat_ser},
+				#{sun_ser},
+				#{sun_n_ser},
+				#{sun_pray},
+				#{bible},
+				#{early_p},
+				#{sat_meet},
+				#{sun_meet},
+				#{note})
+ 	</insert>
+ 	
+ 	<!-- 데이터 입력시 동일한 이메일과 날짜의 데이터가 이미 있는지 확 -->
+ 	<select id="selectOneReCh2" resultType="int">
+		SELECT count(*)
+		FROM religion_ch	
+		WHERE 	email = #{email} AND
+				date = #{date}
+ 	</select>
+ 	
+ 	<delete id="deleteReCh2" parameterType="ReligionChVO">
+ 		DELETE FROM religion_ch WHERE email = #{email} AND date = #{date}
+ 	</delete>
+ 
+ 	<!-- 기도제목 입력 -->
+ 	<insert id="insertPrayList" parameterType="prayListVO">
+ 		INSERT INTO pray_list (email, date, pray_list)
+		VALUES (#{email}, #{date}, #{pray_list})
+ 	</insert>
+ 	
+ 	<!-- 기도제목 이전 데이터 유무 체크 -->
+ 	<select id="selectPrayListOne" resultType="int">
+ 		SELECT count(*)
+		FROM pray_list	
+		WHERE 	email = #{email} AND
+				date = #{date}
+ 	</select>
+ 	
+ 	<!-- 이전 데이터가 있을 때는 update -->
+ 	<update id="updatePrayListOne" parameterType="prayListVO">
+ 		UPDATE pray_list
+ 		SET	pray = #{pray_list}
+ 		WHERE 	email = #{email} AND
+				date = #{date} 
+ 	</update>
+ 	
+ 	<!-- 사용자 기도제목 리스트 --> 
+ 	<select id="selectPrayList" resultType="prayListVO">
+ 		SELECT email, date, pray_list 
+ 		FROM pray_list 
+ 		WHERE email = #{email}
+ 	</select>
+ 	
+ 	
+</mapper>

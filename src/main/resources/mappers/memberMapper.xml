@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.onlyhisson.mappers.memberMapper">
+
+	<!-- 	
+		id 태그는 DAO에서 사용하기 위한 값
+		resultType 태그는 쿼리 실행 후 데이터 값을 담을 타입
+		mybatis-config.xml 에 typeAlias를 등록해야 한다. 
+		등록하지 않으면 resultType="com.onlyhisson.DTO.MemberVO"
+	-->
+	 <select id="selectMembers" resultType="memberVO">
+ 		SELECT id, email, pw, name, age, acc_lv 
+ 		FROM member	
+ 	</select>
+ 	
+ 	<select id="selectMember" resultType="memberVO">
+ 		SELECT id, email, pw, name, age, acc_lv 
+ 		FROM member	
+ 		WHERE email = #{email}
+ 	</select>
+ 	
+ 	<!-- 회원가입 데이터 입력 -->
+ 	<insert id="insertMember" parameterType="java.util.HashMap">
+ 		INSERT INTO member(email, pw, name, age, acc_lv) 
+ 		VALUES(#{email}, #{password}, #{name}, #{age}, #{acc_lv})
+ 	</insert>
+ 	
+ 	<!-- 회원 정보 변경 -->
+ 	<insert id="updateMember" parameterType="java.util.HashMap">
+ 		UPDATE member
+ 		SET	pw = #{password},
+ 			name = #{name},
+ 			age = #{age}
+ 		WHERE 	email = #{email}
+ 	</insert>
+ 
+</mapper>

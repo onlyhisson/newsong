@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+<configuration>
+	<typeAliases>
+		<!-- memberMapper.xml 에서 MemberVO 클래스를  alias 지정 이름으로 사용하기 위함 -->
+		<typeAlias type="com.onlyhisson.DTO.MemberVO" alias="memberVO"/>
+		<!-- religionChMapper.xml 에서 ReligionChVO 클래스를  alias 지정 이름으로 사용하기 위함 -->
+		<typeAlias type="com.onlyhisson.DTO.ReligionChVO" alias="religionChVO"/>
+		<!-- 기도제목 VO -->		
+		<typeAlias type="com.onlyhisson.DTO.PrayListVO" alias="prayListVO"/>
+	</typeAliases>
+</configuration>
