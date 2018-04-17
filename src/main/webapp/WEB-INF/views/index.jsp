@@ -40,15 +40,21 @@
   </head>
 
   <body id="page-top">
-  
-  <!-- 로그인 관리 -->
-<c:choose>
-	<c:when test="${empty sessionScope.userinfo.email}">
-	</c:when>
-	<c:otherwise>
-		<jsp:forward page="./menu/religion_check.jsp"/>
-	</c:otherwise>
-</c:choose>
+ 	
+ 	<!-- 로그인 관리 -->
+	<c:choose>
+		<c:when test="${empty sessionScope.userinfo.email}">
+		</c:when>
+		<c:otherwise>
+			<jsp:forward page="./menu/religion_check.jsp"/>
+		</c:otherwise>
+	</c:choose>
+
+	<!-- 회원가입 성공 팝업 -->
+	<c:if test="${!empty indexPopMsg}">
+		<script>alert("${indexPopMsg}")</script>
+		<c:set var="indexPopMsg" value="" scope="session" /> 
+	</c:if>
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -320,7 +326,30 @@
 	    </div>
 	  </div>
 	</div>
-
+	
+	
+	<!-- Trigger the 회원 가입 성공 여부 modal with a button -->
+	<button class="btn btn-default" id="popbutton" data-target="#myModal" data-toggle="modal"></button>
+	
+	<!-- 회원 가입 성공 여부 Modal -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+		    <div class="modal-content">
+	      		<div class="modal-header">
+	        			<h5 class="modal-title">NEWSONG J</h4>
+	        			<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      		</div>
+		      	<div class="modal-body">
+		        		<p>회원가입 완료.</p>
+		      	</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
     <!-- slide JavaScript -->
     <script src="<c:url value="/resources/theme2/js/slide.js" />"></script>
     
@@ -338,6 +367,12 @@
     
     <!-- 회원가입 유효성 검사 -->
     <script src="<c:url value="/resources/theme2/js/members.js" />"></script>
+    
+    <script>
+    function openModalPopup(){
+		document.getElementById("popbutton").click();
+    }
+    </script>
     
   </body>
 

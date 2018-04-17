@@ -41,27 +41,24 @@ public class LoginController {
 		 * public String submitLogin(@RequestParam(value = "id", required = true) String id,
 		 * @RequestParam(value = "password", required = true) String password) throws Exception {
 		 */
-		logger.info("login");
-
 		MemberVO userInfo;
+		
+		/* 해당 이메일 값으로 DB 데이터 호출 가능 여부 */
 		try {
 			userInfo = service.selectMember(member.getEmail());
 		} catch (Exception e) {
-			/* web.xml 에서 에러페이지 설정 해놔서 아래 코드 삭제 가능할듯 */
 			model.addAttribute("errorMsg", "DB connection error.");
 			return "error/error";
 		}
 
 		/* 로그인 아이디값 유무 판별 */
-		if (CommonUtil.isEmpty(userInfo)) {
-			model.addAttribute("errorMsg", "입력하신 이메일이 존재하지 않거나 비밀번호가 일치하지 않습니다.");
-			return "error/error";
+		if (CommonUtil.isEmpty(userInfo) || !member.getPw().equals(userInfo.getPw())) {
+			model.addAttribute("indexPopMsg", "입력하신 이메일이 존재하지 않거나 비밀번호가 일치하지 않습니다.");
+			return "index";
 		}
 
 		if (member.getPw().equals(userInfo.getPw())) {
 			service.login(member.getEmail());
-			//sessionValuesShow(session);
-
 			return "redirect:religionCh.do";
 		}
 
@@ -81,8 +78,6 @@ public class LoginController {
 	@RequestMapping(value = "permitJoin.do", method = RequestMethod.POST)
 	public String permitJoin(@RequestParam HashMap<String, Object> params, Model model) {
 
-		logger.info("permit join");
-		
 		String memberBirth = params.get("year").toString()
 							+ params.get("month").toString() 
 							+ params.get("day").toString();
@@ -107,25 +102,24 @@ public class LoginController {
 		try {
 			/* 가입 이메일 주소 중복시 */
 			if(service.selectMember(params.get("email").toString()) != null) {
-				model.addAttribute("errorMsg", "아이디 중복");
-				return "error/error";
+				model.addAttribute("indexPopMsg", "아이디 중복");
+				return "index";
 			}
 			/* 데이터 입력 */
 			service.insertMember(params);
+			/* 성공 여부 팝업 노출 */
+			model.addAttribute("indexPopMsg", "회원가입 완료");
 		} catch (DuplicateKeyException dke) {
 			model.addAttribute("errorMsg", "offend against data integrity");
 			return "error/error";
 		} catch (Exception e) {
 		}
-
 		return "index";
 	}
 	
 	/* 회원 정보 수정 페이지 */
 	@RequestMapping(value = "/profile-update.do", method = RequestMethod.GET)
 	public String registerPage(Model model) throws Exception {
-		logger.info("profile update page");
-		
 		return "menu/profile_update";
 	}
 
@@ -155,18 +149,12 @@ public class LoginController {
 		return "redirect:religionCh.do";
 	}
 	
-	
-	// session 객체 키 값 출력
+	/* session 객체 키 값 출력 */
 	public void sessionValuesShow(HttpSession session) {
 		Enumeration<?> enumSession = session.getAttributeNames();
 		while (enumSession.hasMoreElements()) {
 			String name = (String) enumSession.nextElement();
 			System.out.println("[[[session]]] " + name + " : " + session.getAttribute(name));
 		}
-	}
-	
-	/* 에러페이지 이동 처리 */
-	public String moveErrorPage(String str) {
-		return "";
 	}
 }
