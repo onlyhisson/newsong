@@ -66,7 +66,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">About</a>
+              <a class="nav-link js-scroll-trigger" href="#about">Join</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#menu">Menu</a>
@@ -105,11 +105,18 @@
           			<span class="pull-left"><label for="pw">Password :</label></span>
           			<input type="password" class="form-control" id="pw" placeholder="Enter password" name="pw">
           		</div>
+          		<!-- 
           		<div class="form-check">
           			<span class="pull-left">
           			<label class="form-check-label">
-          				<input class="form-check-input" type="checkbox" name="remember"> Remember me
+          				<input class="form-check-input" type="checkbox" name="reset_pw"> 비밀번호 분실
           			</label>
+          			</span>
+          		</div>
+          		 -->
+          		<div class="form-group">
+          			<span class="pull-left">
+          				<a href="/newsong/resetPassword.do">비밀번호 분실</a>
           			</span>
           		</div>
           		<br />

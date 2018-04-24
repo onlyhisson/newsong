@@ -7,6 +7,7 @@ public class MemberVO {
 	private String name;
 	private String age;
 	private String acc_lv;
+	private String auth_code;
 	
 	public String getEmail() {
 		return email;
@@ -38,6 +39,11 @@ public class MemberVO {
 	public void setAcc_lv(String acc_lv) {
 		this.acc_lv = acc_lv;
 	}
-
+	public String getAuth_code() {
+		return auth_code;
+	}
+	public void setAuth_code(String auth_code) {
+		this.auth_code = auth_code;
+	}
 	
 }
