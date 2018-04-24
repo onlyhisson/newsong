@@ -11,20 +11,20 @@
 		등록하지 않으면 resultType="com.onlyhisson.DTO.MemberVO"
 	-->
 	 <select id="selectMembers" resultType="memberVO">
- 		SELECT id, email, pw, name, age, acc_lv 
+ 		SELECT id, email, pw, name, age, acc_lv, auth_code 
  		FROM member	
  	</select>
  	
  	<select id="selectMember" resultType="memberVO">
- 		SELECT id, email, pw, name, age, acc_lv 
+ 		SELECT id, email, pw, name, age, acc_lv, auth_code 
  		FROM member	
  		WHERE email = #{email}
  	</select>
  	
  	<!-- 회원가입 데이터 입력 -->
  	<insert id="insertMember" parameterType="java.util.HashMap">
- 		INSERT INTO member(email, pw, name, age, acc_lv) 
- 		VALUES(#{email}, #{password}, #{name}, #{age}, #{acc_lv})
+ 		INSERT INTO member(email, pw, name, age, acc_lv, auth_code) 
+ 		VALUES(#{email}, #{password}, #{name}, #{age}, #{acc_lv}, #{auth_code})
  	</insert>
  	
  	<!-- 회원 정보 변경 -->
@@ -35,5 +35,28 @@
  			age = #{age}
  		WHERE 	email = #{email}
  	</insert>
+ 	
+ 	<!-- 인증키 입력 -->
+ 	<update id="putAuthKey" parameterType="java.util.HashMap">
+ 		UPDATE member
+ 		SET auth_code = #{auth_code}
+ 		WHERE email = #{email}
+ 	</update>
+ 	
+ 	<!-- 회원 가입 후 인증 확인 -->
+ 	<select id="authMember" resultType="java.lang.Integer">
+ 		SELECT count(*)
+ 		FROM member	
+ 		WHERE email = #{email} 
+ 		AND auth_code = #{auth_code}
+ 	</select>
+ 	
+ 	<!-- 회원 권한 부여 -->
+ 	<update id="putAccLv" parameterType="java.util.HashMap">
+ 		UPDATE member
+ 		SET	acc_lv = #{acc_lv},
+ 			auth_code = #{auth_code}
+ 		WHERE 	email = #{email}
+ 	</update>
  
 </mapper>

@@ -11,5 +11,8 @@ public interface MemberDAO {
 	public MemberVO selectMember(String str) throws Exception;
 	public int insertMember(HashMap<String, Object> params) throws Exception;
 	public int updateMember(HashMap<String, Object> params) throws Exception;
+	public int createAuthKey(HashMap<String, Object> params) throws Exception;
+	public int authMember(HashMap<String, Object> params) throws Exception;
+	public int putMemberAccLv(HashMap<String, Object> params) throws Exception;
 	
 }
