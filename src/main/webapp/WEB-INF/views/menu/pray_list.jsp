@@ -158,6 +158,11 @@
 			alert(el1.item(0).val());
 			//enter_event(el1.item('1'));
     		});
+		
+		/* 날짜 내림차순 이벤트 : 페이지 호출시 웰브라우저가 HTML, CSS, JS를 인식한 다음 실행 */
+		$(document).ready(function(){
+			document.getElementsByClassName('sorting_asc')[0].click();
+		});
 	</script>
     
 </body>

@@ -324,10 +324,16 @@
 				$(this).val($(this).val().replace(/[^0-9]/g,""));
 			});
 		}
+		
 		/* 입력데이터에 문자 섞여 있을 때 제거 */
 		function onlyNumber2(obj) {
 			$(obj).val($(obj).val().replace(/[^0-9]/g,""));
 		}
+		
+		/* 날짜 내림차순 이벤트 : 페이지 호출시 웰브라우저가 HTML, CSS, JS를 인식한 다음 실행 */
+		$(document).ready(function(){
+			document.getElementsByClassName('sorting_asc')[0].click();
+		});
 	</script>
 
 </body>

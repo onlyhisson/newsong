@@ -44,6 +44,7 @@
 				note
 		FROM religion_ch	
 		WHERE email = #{email}
+		ORDER BY date DESC
  	</select>
  	
  	<!-- 회원가입 데이터 입력 -->
@@ -76,7 +77,7 @@
 				#{note})
  	</insert>
  	
- 	<!-- 데이터 입력시 동일한 이메일과 날짜의 데이터가 이미 있는지 확 -->
+ 	<!-- 데이터 입력시 동일한 이메일과 날짜의 데이터가 이미 있는지 확인 -->
  	<select id="selectOneReCh2" resultType="int">
 		SELECT count(*)
 		FROM religion_ch	
@@ -115,6 +116,7 @@
  		SELECT email, date, pray_list 
  		FROM pray_list 
  		WHERE email = #{email}
+ 		ORDER BY date DESC
  	</select>
  	
  	
