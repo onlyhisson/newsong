@@ -28,13 +28,13 @@
  	</insert>
  	
  	<!-- 회원 정보 변경 -->
- 	<insert id="updateMember" parameterType="java.util.HashMap">
+ 	<update id="updateMember" parameterType="java.util.HashMap">
  		UPDATE member
  		SET	pw = #{password},
  			name = #{name},
  			age = #{age}
  		WHERE 	email = #{email}
- 	</insert>
+ 	</update>
  	
  	<!-- 인증키 입력 -->
  	<update id="putAuthKey" parameterType="java.util.HashMap">
@@ -59,4 +59,10 @@
  		WHERE 	email = #{email}
  	</update>
  
+ 	<!-- 비밀번호 분실시 임의값 입력 -->
+ 	<update id="resetPassword" parameterType="java.util.HashMap">
+ 		UPDATE member
+ 		SET pw = #{pw}
+ 		WHERE email =#{email}
+ 	</update>
 </mapper>

@@ -14,5 +14,6 @@ public interface MemberDAO {
 	public int createAuthKey(HashMap<String, Object> params) throws Exception;
 	public int authMember(HashMap<String, Object> params) throws Exception;
 	public int putMemberAccLv(HashMap<String, Object> params) throws Exception;
+	public int resetPassword(HashMap<String, Object> params) throws Exception;
 	
 }

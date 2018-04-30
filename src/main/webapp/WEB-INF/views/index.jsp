@@ -96,7 +96,7 @@
             </p>
           </div>
           <div class="col-lg-4 mx-auto">
-          	<form action="login.do" method="POST">
+          	<form name ="indexPageForm" action="login.do" method="POST">
           		<div class="form-group">
           			<span class="pull-left"><label for="email">Email :</label></span>
           			<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
@@ -105,18 +105,9 @@
           			<span class="pull-left"><label for="pw">Password :</label></span>
           			<input type="password" class="form-control" id="pw" placeholder="Enter password" name="pw">
           		</div>
-          		<!-- 
-          		<div class="form-check">
-          			<span class="pull-left">
-          			<label class="form-check-label">
-          				<input class="form-check-input" type="checkbox" name="reset_pw"> 비밀번호 분실
-          			</label>
-          			</span>
-          		</div>
-          		 -->
           		<div class="form-group">
           			<span class="pull-left">
-          				<a href="/newsong/resetPassword.do">비밀번호 분실</a>
+          				<a href="#" onclick="movePwResetPage(); return false;" style="color:white">비밀번호를 잊으셨나요?</a>
           			</span>
           		</div>
           		<br />
@@ -376,9 +367,15 @@
     <script src="<c:url value="/resources/theme2/js/members.js" />"></script>
     
     <script>
-    function openModalPopup(){
-		document.getElementById("popbutton").click();
-    }
+	    function openModalPopup() {
+			document.getElementById("popbutton").click();
+	    }
+	    
+	    function movePwResetPage() {
+		    	document.indexPageForm.action="forgotPassword.do"; 
+		    	document.indexPageForm.method="get"; 
+		    	document.indexPageForm.submit();
+	    }
     </script>
     
   </body>
