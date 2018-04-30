@@ -162,8 +162,6 @@ public class LoginController {
 	/* 이매일 인증 */
 	@RequestMapping(value="/confirmAuthKey.do", method = RequestMethod.GET)
 	public String confirmAuthKey(@RequestParam HashMap<String, Object> params, Model model) throws Exception {
-	//public String confirmAuthKey(@RequestParam(value = "user_email", required = true) String email, 
-	//							@RequestParam(value = "key", required = true) String auth_code, Model model) throws Exception {
 		/* 
 		 * 인증키 확인 완료하면 
 		 * 인증 컬럼 값 제거 후 권한에 값을 채운 후
@@ -180,14 +178,22 @@ public class LoginController {
 		
 		return "index";
 	}
+	
+	/* 비밀번호 분실시 이동 페이지 */
+	@RequestMapping(value="/forgotPassword.do", method = RequestMethod.GET)
+	public String forgotPassword() throws Exception {
+		return "menu/forgot-password";
+	}
 
 	/* 비밀번호 분실시 메일 보내기 */
-	@RequestMapping(value = "/resetPassword.do", method = RequestMethod.GET)
-	public String resetPassword(Model model) throws Exception {
-	
-		model.addAttribute("indexPopMsg", "비밀번호 재발송 완료.");
+	@RequestMapping(value="/resetPassword.do", method = RequestMethod.POST)
+	public String resetPassword(@RequestParam HashMap<String, Object> params, Model model) throws Exception {
+		MemberVO user = service.selectMember(params.get("email").toString());
+		
+		if(!CommonUtil.isEmpty(user))
+			service.resetPassword(params);
+		model.addAttribute("indexPopMsg", "임의 변경된 비밀번호 이메일 발송 완료.");
 
 		return "index";
 	}
-
 }

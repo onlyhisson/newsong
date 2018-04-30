@@ -12,7 +12,7 @@ public interface MemberService {
 	public int insertMember(HashMap<String, Object> params) throws Exception;
 	public int login(String str) throws Exception;
 	public int updateMember(HashMap<String, Object> params) throws Exception;
-	public void createAuthKey(HashMap<String, Object> params) throws Exception;
 	public int authMember(HashMap<String, Object> params) throws Exception;
+	public int resetPassword(HashMap<String, Object> params) throws Exception;
 
 }

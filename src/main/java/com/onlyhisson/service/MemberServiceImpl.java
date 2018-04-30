@@ -19,6 +19,8 @@ import com.onlyhisson.common.UserInfoSession;
 
 @Service
 public class MemberServiceImpl implements MemberService {
+	
+	String hostEmail = "newsong0405@gmail.com";
 
 	@Autowired
 	private MemberDAO dao;
@@ -41,6 +43,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int insertMember(HashMap<String, Object> params) throws Exception {
+		dao.insertMember(params);
 		createAuthKey(params);
 		return 1;
 	}
@@ -81,18 +84,22 @@ public class MemberServiceImpl implements MemberService {
 		return 1;
 	}
 	
-	@Transactional
+	/* 비밀번호 분실시 초기화 후 재발송 */
 	@Override
+	public int resetPassword(HashMap<String, Object> params) throws Exception {
+		sendChangedPassword(params);
+		
+		return 1;
+	}
+	
+	/* 회원인증 확인 메일 보내기 */
 	public void createAuthKey(HashMap<String, Object> params) throws Exception {
 		String userEmail = params.get("email").toString();
-		String hostEmail = "newsong0405@gmail.com";
 		String requestUrl = params.get("url").toString();
 		String fromUrl = requestUrl.substring(0, requestUrl.indexOf("/newsong"));
 		String key = new TempKey().getKey(50, false); // 인증키 생성
 		
 		params.put("auth_code", key);
-		
-		dao.insertMember(params);
 		dao.createAuthKey(params);
 
 		MailHandler sendMail = new MailHandler(mailSender);
@@ -104,4 +111,21 @@ public class MemberServiceImpl implements MemberService {
 		sendMail.setTo(userEmail);
 		sendMail.send();
 	}
+	
+	/* 초기화된 비밀번호 이메일 전송 */
+	public void sendChangedPassword(HashMap<String, Object> params) throws Exception {
+		String userEmail = params.get("email").toString();
+		String key = new TempKey().getKey(10, false); // 인증키 생성
+		
+		params.put("pw", key);
+		dao.resetPassword(params);
+		
+		MailHandler sendMail = new MailHandler(mailSender);
+		sendMail.setSubject("NEWSONG J 비밀번호 재발송");
+		sendMail.setText(new StringBuffer().append("<h3>새 비밀번호</h3>").append(key).toString());
+		sendMail.setFrom(hostEmail, "NEWSONG J 관리자");
+		sendMail.setTo(userEmail);
+		sendMail.send();
+	}
+	
 }

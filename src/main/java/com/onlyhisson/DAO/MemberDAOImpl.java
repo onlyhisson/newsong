@@ -51,4 +51,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public int putMemberAccLv(HashMap<String, Object> params) throws Exception {
 		return sqlSession.update(Namespace + ".putAccLv", params);
 	}
+	
+	@Override 
+	public int resetPassword(HashMap<String, Object> params) throws Exception {
+		return sqlSession.update(Namespace + ".resetPassword", params);
+	}
 }
